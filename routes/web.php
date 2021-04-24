@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/threads', 'ThreadController')->except(['create', 'update']);
+Route::resource('/threads/{thread}/messages', 'MessageController')->except(['create', 'update']);
