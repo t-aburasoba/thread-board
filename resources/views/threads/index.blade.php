@@ -1,4 +1,6 @@
 @inject('message_service', 'App\Services\MessageService')
+@inject('image_service', 'App\Services\ImageService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -24,9 +26,15 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $loop->iteration }} 名前：{{ $message->user->name }}：{{ $message->created_at }}</h5>
                             <p class="card-text">{!! $message_service->convertUrl($message->body) !!}</p>
-                            @foreach ($message->images as $image)
-                                <img src="{{ $image->s3_file_path }}" alt="">
-                            @endforeach
+                            <div class="row">
+                                @if (!$message->images->isEmpty())
+                                    @foreach ($message->images as $image)
+                                    <div class="col-md-3">
+                                        <img src="{{ $image_service->createTemporaryUrl($image->s3_file_path) }}" class="img-thumbnail" alt="">
+                                    </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                     <div class="card-footer">
