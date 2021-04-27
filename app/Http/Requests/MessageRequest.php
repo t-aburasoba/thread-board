@@ -24,14 +24,17 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required',
+            'body'     => 'required',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
         ];
     }
 
     public function messages()
     {
         return [
-            'body.required'  => trans('validation.required'),
+            'body.required' => trans('validation.required'),
+            'images.image'  => trans('validation.image'),
+            'images.mimes'  => trans('validation.mimes'),
         ];
     }
 }
