@@ -1,4 +1,6 @@
 @inject('message_service', 'App\Services\MessageService')
+@inject('image_service', 'App\Services\ImageService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -24,18 +26,19 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $loop->iteration }} 名前：{{ $message->user->name }}：{{ $message->created_at }}</h5>
                             <p class="card-text">{!! $message_service->convertUrl($message->body) !!}</p>
+                            <div class="row">
+                                @if (!$message->images->isEmpty())
+                                    @foreach ($message->images as $image)
+                                    <div class="col-md-3">
+                                        <img src="{{ $image_service->createTemporaryUrl($image->s3_file_path) }}" class="img-thumbnail" alt="">
+                                    </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                     <div class="card-footer">
-                        <form method="POST" action="{{ route('messages.store', $thread->id) }}" class="mb-4">
-                            @csrf
-                            <div class="form-group">
-                                <label for="thread-first-content">内容</label>
-                                <textarea name="body" class="form-control" id="thread-first-content" rows="3"
-                                    required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">書き込む</button>
-                        </form>
+                        @include('components.message-create', compact('thread'))
                         <a href="{{ route('threads.show', $thread->id) }}">全部読む</a>
                         <a href="{{ route('threads.show', $thread->id) }}">最新50</a>
                         <a href="{{ route('threads.show', $thread->id) }}">1-100</a>
