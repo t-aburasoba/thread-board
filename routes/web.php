@@ -26,7 +26,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('login', 'Admin\LoginController@login');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::post('logout', 'Admin\LoginController@logout')->name('admin.logout');
-    Route::get('home', 'Admin\HomeController@index')->name('admin.home');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.'], function () {
+    Route::post('logout', 'Admin\LoginController@logout')->name('logout');
+    Route::get('home', 'Admin\HomeController@index')->name('home');
+    Route::resource('/threads', 'Admin\ThreadController')->except(['create', 'store', 'update']);
+    Route::resource('/threads/{thread}/messages', 'Admin\MessageController')->only(['destroy']);
 });

@@ -66,4 +66,16 @@ class ThreadRepository
         $thread->latest_comment_time = Carbon::now();
         return $thread->save();
     }
+
+    /**
+     * Delete thread from id
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function deleteThread(int $id)
+    {
+        $thread = $this->findById($id);
+        return $thread->delete();
+    }
 }
