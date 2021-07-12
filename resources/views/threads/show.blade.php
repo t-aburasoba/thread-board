@@ -39,7 +39,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <h5 class="card-header">レスを投稿する</h5>
+                <h5 class="card-header mt-2">レスを投稿する</h5>
                 <div class="card-body">
                     @include('components.message-create', compact('thread'))
                 </div>
