@@ -49,7 +49,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <h5 class="card-header">新規スレッド作成</h5>
+                <h5 class="card-header mt-2">新規スレッド作成</h5>
                 <div class="card-body">
                     <form method="POST" action="{{ route('threads.store') }}">
                         @csrf
