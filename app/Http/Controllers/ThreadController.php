@@ -75,7 +75,7 @@ class ThreadController extends Controller
                 ['name', 'content']
             );
             $this->thread_service->createNewThread($data, Auth::id());
-            $this->slack_notification_service->send($request->name);
+            $this->slack_notification_service->send(Auth::user()->name . ' が ' . $request->name . 'を立てました！');
         } catch (Exception $error) {
             return redirect()->route('threads.index')->with('error', 'スレッドの新規作成に失敗しました。');
         }
